@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+option go_package = "github.com/microtwitch/chatedge/protos";
+
+service ChatEdge {
+    rpc JoinChat (JoinRequest) returns (Empty) {}
+}
+
+message JoinRequest {
+    string channel = 1;
+}
+
+message Empty {
+}
