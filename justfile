@@ -13,4 +13,4 @@ docker-build:
     docker build --tag ghcr.io/microtwitch/chatedge:latest .
 
 docker-push: docker-build
-    docker push ghcr.io/m4tthewde/chatedge:latest
+    docker push ghcr.io/microtwitch/chatedge:latest
