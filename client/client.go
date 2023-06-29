@@ -3,6 +3,7 @@ package client
 import (
 	"context"
 
+	"github.com/microtwitch/chatedge/logger"
 	"github.com/microtwitch/chatedge/protos"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -28,7 +29,9 @@ func NewChatEdgeClient() (*ChatEdgeClient, error) {
 
 func (c *ChatEdgeClient) JoinChat(ctx context.Context, channel string) error {
 	joinRequest := protos.JoinRequest{Channel: channel}
-	_, err := c.client.JoinChat(ctx, &joinRequest)
+	resp, err := c.client.JoinChat(ctx, &joinRequest)
+
+	logger.Info.Println(resp.Id)
 
 	return err
 }

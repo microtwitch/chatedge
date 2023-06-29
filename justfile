@@ -1,12 +1,15 @@
 set dotenv-load
 
-protoc:
+clean-proto:
+    rm protos/*.go
+
+protoc: clean-proto
     protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative protos/*.proto
 
 run: protoc
     go run cmd/chatedge/main.go
 
-run-example:
+run-example: protoc
     go run cmd/example/main.go
 
 debug:

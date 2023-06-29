@@ -11,10 +11,10 @@ type chatEdgeServer struct {
 	protos.UnimplementedChatEdgeServer
 }
 
-func (s *chatEdgeServer) JoinChat(ctx context.Context, joinRequest *protos.JoinRequest) (*protos.Empty, error) {
+func (s *chatEdgeServer) JoinChat(ctx context.Context, joinRequest *protos.JoinRequest) (*protos.JoinResponse, error) {
 	logger.Info.Println(joinRequest.Channel)
 
-	return &protos.Empty{}, nil
+	return &protos.JoinResponse{Id: "1"}, nil
 }
 
 func NewServer() *chatEdgeServer {

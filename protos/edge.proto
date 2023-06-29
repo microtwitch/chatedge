@@ -2,13 +2,27 @@ syntax = "proto3";
 
 option go_package = "github.com/microtwitch/chatedge/protos";
 
+
 service ChatEdge {
-    rpc JoinChat (JoinRequest) returns (Empty) {}
+    rpc JoinChat (JoinRequest) returns (JoinResponse) {}
+    rpc GetChats(ChatRequest) returns (ChatResponse) {}
 }
 
 message JoinRequest {
     string channel = 1;
 }
 
-message Empty {
+message JoinResponse {
+    string id = 1;
+}
+
+// chatedge does not persist any form of state
+// clients have to regularly check if they are still subscribed
+// if the chatedge restarts, all state is lost!
+message ChatRequest {
+    string id = 1; 
+}
+
+message ChatResponse {
+    repeated string channels = 1;
 }

@@ -21,4 +21,8 @@ func main() {
 	if err != nil {
 		logger.Error.Fatalln(err)
 	}
+
+	for {
+		select {}
+	}
 }
