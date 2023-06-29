@@ -4,12 +4,13 @@ option go_package = "github.com/microtwitch/chatedge/protos";
 
 
 service ChatEdge {
-    rpc JoinChat (JoinRequest) returns (JoinResponse) {}
+    rpc JoinChat(JoinRequest) returns (JoinResponse) {}
     rpc GetChats(ChatRequest) returns (ChatResponse) {}
 }
 
 message JoinRequest {
     string channel = 1;
+    string callback = 2;
 }
 
 message JoinResponse {

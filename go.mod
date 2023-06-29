@@ -3,6 +3,7 @@ module github.com/microtwitch/chatedge
 go 1.20
 
 require (
+	github.com/gempir/go-twitch-irc/v4 v4.0.0
 	google.golang.org/grpc v1.56.1
 	google.golang.org/protobuf v1.31.0
 )

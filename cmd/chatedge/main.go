@@ -3,6 +3,7 @@ package main
 import (
 	"net"
 
+	"github.com/microtwitch/chatedge/config"
 	"github.com/microtwitch/chatedge/logger"
 	"github.com/microtwitch/chatedge/protos"
 	"github.com/microtwitch/chatedge/server"
@@ -11,10 +12,11 @@ import (
 
 func main() {
 	logger.Init()
+	config.Init()
 
 	logger.Info.Println("Starting server...")
 
-	lis, err := net.Listen("tcp", "localhost:8080")
+	lis, err := net.Listen("tcp", "localhost:"+config.Port)
 	if err != nil {
 		logger.Error.Fatalln(err)
 	}
