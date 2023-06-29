@@ -1,6 +1,9 @@
 set dotenv-load
 
-run:
+protoc:
+    protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative protos/*.proto
+
+run: protoc
     go run cmd/chatedge/main.go
 
 run-example:
@@ -9,7 +12,7 @@ run-example:
 debug:
     dlv debug cmd/chatedge/main.go
 
-docker-build:
+docker-build: protoc
     docker build --tag ghcr.io/microtwitch/chatedge:latest .
 
 docker-push: docker-build
