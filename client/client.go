@@ -30,6 +30,9 @@ func NewChatEdgeClient() (*ChatEdgeClient, error) {
 func (c *ChatEdgeClient) JoinChat(ctx context.Context, channel string) error {
 	joinRequest := protos.JoinRequest{Channel: channel}
 	resp, err := c.client.JoinChat(ctx, &joinRequest)
+	if err != nil {
+		return err
+	}
 
 	logger.Info.Println(resp.Id)
 

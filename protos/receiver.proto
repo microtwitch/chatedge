@@ -4,7 +4,7 @@ option go_package = "github.com/microtwitch/chatedge/protos";
 
 
 service EdgeReceiver {
-    rpc Recv(ChatMessage) returns (Empty) {}
+    rpc Send(ChatMessage) returns (Empty) {}
 }
 
 message ChatMessage {

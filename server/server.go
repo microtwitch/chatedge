@@ -20,9 +20,11 @@ func NewServer() *chatEdgeServer {
 }
 
 func (s *chatEdgeServer) JoinChat(ctx context.Context, joinRequest *protos.JoinRequest) (*protos.JoinResponse, error) {
-	logger.Info.Println(joinRequest.Channel)
+	err := s.reader.Join(joinRequest.Channel, joinRequest.Callback)
+	if err != nil {
+		return nil, err
+	}
 
-	s.reader.Join(joinRequest.Channel, joinRequest.Callback)
 	return &protos.JoinResponse{Id: "1"}, nil
 }
 
