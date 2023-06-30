@@ -24,7 +24,11 @@ func main() {
 	var opts []grpc.ServerOption
 
 	grpcServer := grpc.NewServer(opts...)
-	protos.RegisterChatEdgeServer(grpcServer, server.NewServer())
+	server := server.NewServer()
+
+	go server.Read()
+
+	protos.RegisterChatEdgeServer(grpcServer, server)
 
 	grpcServer.Serve(lis)
 }

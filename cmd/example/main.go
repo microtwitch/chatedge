@@ -17,7 +17,7 @@ func main() {
 		logger.Error.Fatalln(err)
 	}
 
-	err = client.JoinChat(context.Background(), "turtoise")
+	err = client.JoinChat(context.Background(), "quin69")
 	if err != nil {
 		logger.Error.Fatalln(err)
 	}

@@ -14,6 +14,11 @@ type chatEdgeServer struct {
 	reader *reader.Reader
 }
 
+func NewServer() *chatEdgeServer {
+	s := &chatEdgeServer{reader: reader.NewReader()}
+	return s
+}
+
 func (s *chatEdgeServer) JoinChat(ctx context.Context, joinRequest *protos.JoinRequest) (*protos.JoinResponse, error) {
 	logger.Info.Println(joinRequest.Channel)
 
@@ -21,7 +26,9 @@ func (s *chatEdgeServer) JoinChat(ctx context.Context, joinRequest *protos.JoinR
 	return &protos.JoinResponse{Id: "1"}, nil
 }
 
-func NewServer() *chatEdgeServer {
-	s := &chatEdgeServer{reader: reader.NewReader()}
-	return s
+func (s *chatEdgeServer) Read() {
+	err := s.reader.Read()
+	if err != nil {
+		logger.Error.Fatalln(err)
+	}
 }
