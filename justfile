@@ -15,7 +15,7 @@ run-example: protoc
 debug:
     dlv debug cmd/chatedge/main.go
 
-docker-build: protoc
+docker-build: clean-proto
     docker build --tag ghcr.io/microtwitch/chatedge:latest .
 
 docker-push: docker-build
