@@ -2,14 +2,14 @@ package reader
 
 import (
 	"github.com/gempir/go-twitch-irc/v4"
-	"github.com/microtwitch/chatedge/client"
+	"github.com/microtwitch/chatedge/edge/receiver"
 	"github.com/microtwitch/chatedge/shared/logger"
 	"github.com/microtwitch/chatedge/shared/util"
 )
 
 type Receiver struct {
 	channels []string
-	client   *client.ReceiverClient
+	client   *receiver.ReceiverClient
 }
 
 type Reader struct {
@@ -38,10 +38,10 @@ func (r *Reader) Read() error {
 }
 
 func (r *Reader) Join(channel string, callback string) error {
-	receiver, exists := r.receivers[callback]
+	recv, exists := r.receivers[callback]
 	if !exists {
 		logger.Info.Println("Registering new receiver for callback" + callback)
-		client, err := client.NewReceiverClient(callback)
+		client, err := receiver.NewReceiverClient(callback)
 		if err != nil {
 			return err
 		}
@@ -51,7 +51,7 @@ func (r *Reader) Join(channel string, callback string) error {
 			client:   client,
 		}
 	} else {
-		receiver.channels = append(receiver.channels, channel)
+		recv.channels = append(recv.channels, channel)
 	}
 
 	logger.Info.Println("Joining #" + channel)

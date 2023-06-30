@@ -3,9 +3,9 @@ package main
 import (
 	"net"
 
-	"github.com/microtwitch/chatedge/config"
+	"github.com/microtwitch/chatedge/edge/config"
+	"github.com/microtwitch/chatedge/edge/server"
 	"github.com/microtwitch/chatedge/protos"
-	"github.com/microtwitch/chatedge/server"
 	"github.com/microtwitch/chatedge/shared/logger"
 	"google.golang.org/grpc"
 )
