@@ -3,9 +3,9 @@ package server
 import (
 	"context"
 
-	"github.com/microtwitch/chatedge/logger"
 	"github.com/microtwitch/chatedge/protos"
 	"github.com/microtwitch/chatedge/reader"
+	"github.com/microtwitch/chatedge/shared/logger"
 )
 
 type chatEdgeServer struct {

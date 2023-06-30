@@ -3,8 +3,8 @@ package reader
 import (
 	"github.com/gempir/go-twitch-irc/v4"
 	"github.com/microtwitch/chatedge/client"
-	"github.com/microtwitch/chatedge/logger"
-	"github.com/microtwitch/chatedge/util"
+	"github.com/microtwitch/chatedge/shared/logger"
+	"github.com/microtwitch/chatedge/shared/util"
 )
 
 // TODO: should include a client, which is used to send the msgs to the receiver

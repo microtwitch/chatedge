@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/microtwitch/chatedge/client"
-	"github.com/microtwitch/chatedge/logger"
+	"github.com/microtwitch/chatedge/shared/logger"
 )
 
 func main() {

@@ -3,8 +3,8 @@ package client
 import (
 	"context"
 
-	"github.com/microtwitch/chatedge/logger"
 	"github.com/microtwitch/chatedge/protos"
+	"github.com/microtwitch/chatedge/shared/logger"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
