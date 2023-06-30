@@ -7,7 +7,6 @@ import (
 	"github.com/microtwitch/chatedge/shared/util"
 )
 
-// TODO: should include a client, which is used to send the msgs to the receiver
 type Receiver struct {
 	channels []string
 	client   *client.ReceiverClient
