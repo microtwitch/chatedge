@@ -9,6 +9,8 @@ RUN protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_o
 RUN CGO_ENABLED=0 GOOS=linux go build cmd/chatedge/main.go
 
 From alpine:latest
+LABEL org.opencontainers.image.source="https://github.com/microtwitch/chatedge"
+
 WORKDIR /root/
 COPY --from=builder /app/main ./
 CMD ["./main"]
