@@ -12,12 +12,12 @@ func main() {
 
 	logger.Info.Println("Starting client...")
 
-	client, err := receiver.NewChatEdgeClient()
+	client, err := receiver.NewChatEdgeClient("localhost:8080")
 	if err != nil {
 		logger.Error.Fatalln(err)
 	}
 
-	err = client.JoinChat(context.Background(), "quin69")
+	err = client.JoinChat(context.Background(), "tmiloadtesting2", "localhost:9090")
 	if err != nil {
 		logger.Error.Fatalln(err)
 	}

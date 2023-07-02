@@ -16,7 +16,7 @@ run-all: protoc
     go run cmd/all/main.go
 
 debug:
-    dlv debug cmd/chatedge/main.go
+    dlv debug cmd/all/main.go
 
 docker-build: clean-proto
     docker build --tag ghcr.io/microtwitch/chatedge:latest .

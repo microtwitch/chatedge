@@ -1,6 +1,8 @@
 package reader
 
 import (
+	"context"
+
 	"github.com/gempir/go-twitch-irc/v4"
 	"github.com/microtwitch/chatedge/edge/receiver"
 	"github.com/microtwitch/chatedge/shared/logger"
@@ -61,18 +63,22 @@ func (r *Reader) Join(channel string, callback string) error {
 }
 
 func (r *Reader) onPrivateMessage(msg twitch.PrivateMessage) {
-	receiverFound := r.distributeMessage(msg)
+	receiverFound := r.distributeMessage(context.Background(), msg)
 	if !receiverFound {
 		logger.Warn.Println("No receiver found for channel #" + msg.Channel)
 	}
 }
 
-func (r *Reader) distributeMessage(msg twitch.PrivateMessage) bool {
+func (r *Reader) distributeMessage(ctx context.Context, msg twitch.PrivateMessage) bool {
 	receiverFound := false
 	for _, receiver := range r.receivers {
 		if util.Contains(receiver.channels, msg.Channel) {
-			// TODO: send to client
 			receiverFound = true
+			err := receiver.client.Send(ctx, msg)
+			if err != nil {
+				// TODO: handle too many errors, kick out receiver
+				logger.Warn.Println(err)
+			}
 		}
 	}
 

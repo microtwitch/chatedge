@@ -13,11 +13,11 @@ type ChatEdgeClient struct {
 	client protos.ChatEdgeClient
 }
 
-func NewChatEdgeClient() (*ChatEdgeClient, error) {
+func NewChatEdgeClient(target string) (*ChatEdgeClient, error) {
 	var opts []grpc.DialOption
 	opts = append(opts, grpc.WithTransportCredentials(insecure.NewCredentials()))
 
-	conn, err := grpc.Dial("localhost:8080", opts...)
+	conn, err := grpc.Dial(target, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -27,8 +27,8 @@ func NewChatEdgeClient() (*ChatEdgeClient, error) {
 	return &ChatEdgeClient{client}, nil
 }
 
-func (c *ChatEdgeClient) JoinChat(ctx context.Context, channel string) error {
-	joinRequest := protos.JoinRequest{Channel: channel}
+func (c *ChatEdgeClient) JoinChat(ctx context.Context, channel string, callback string) error {
+	joinRequest := protos.JoinRequest{Channel: channel, Callback: callback}
 	resp, err := c.client.JoinChat(ctx, &joinRequest)
 	if err != nil {
 		return err
@@ -36,5 +36,5 @@ func (c *ChatEdgeClient) JoinChat(ctx context.Context, channel string) error {
 
 	logger.Info.Println(resp.Id)
 
-	return err
+	return nil
 }
