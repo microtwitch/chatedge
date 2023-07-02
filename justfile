@@ -21,5 +21,7 @@ debug:
 docker-build: clean-proto
     docker build --tag ghcr.io/microtwitch/chatedge:latest .
 
-docker-push: docker-build
-    docker push ghcr.io/microtwitch/chatedge:latest
+docker-release version:
+    git checkout {{version}}
+    docker build --tag ghcr.io/microtwitch/chatedge:{{version}} .
+    docker push ghcr.io/microtwitch/chatedge:{{version}}
