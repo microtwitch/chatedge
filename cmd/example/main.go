@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 
-	"github.com/microtwitch/chatedge/receiver"
+	"github.com/microtwitch/chatedge/receiver/edge"
 	"github.com/microtwitch/chatedge/shared/logger"
 )
 
@@ -12,7 +12,7 @@ func main() {
 
 	logger.Info.Println("Starting client...")
 
-	client, err := receiver.NewChatEdgeClient("localhost:8080")
+	client, err := edge.NewChatEdgeClient("localhost:8080")
 	if err != nil {
 		logger.Error.Fatalln(err)
 	}
