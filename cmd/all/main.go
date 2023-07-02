@@ -7,7 +7,8 @@ import (
 	"github.com/microtwitch/chatedge/edge/config"
 	"github.com/microtwitch/chatedge/edge/server"
 	"github.com/microtwitch/chatedge/protos"
-	"github.com/microtwitch/chatedge/receiver"
+	"github.com/microtwitch/chatedge/receiver/client"
+	receiver_server "github.com/microtwitch/chatedge/receiver/server"
 	"github.com/microtwitch/chatedge/shared/logger"
 	"google.golang.org/grpc"
 )
@@ -50,13 +51,13 @@ func runReceiver() {
 
 	var opts []grpc.ServerOption
 	grpcServer := grpc.NewServer(opts...)
-	server := receiver.NewServer()
+	server := receiver_server.NewServer()
 
 	protos.RegisterEdgeReceiverServer(grpcServer, server)
 
 	go grpcServer.Serve(lis)
 
-	client, err := receiver.NewChatEdgeClient(EDGE_TARGET)
+	client, err := client.NewChatEdgeClient(EDGE_TARGET)
 	if err != nil {
 		logger.Error.Fatalln(err)
 	}
