@@ -7,7 +7,7 @@ import (
 	"github.com/microtwitch/chatedge/edge/config"
 	"github.com/microtwitch/chatedge/edge/server"
 	"github.com/microtwitch/chatedge/protos"
-	"github.com/microtwitch/chatedge/receiver/client"
+	"github.com/microtwitch/chatedge/receiver/edge"
 	receiver_server "github.com/microtwitch/chatedge/receiver/server"
 	"github.com/microtwitch/chatedge/shared/logger"
 	"google.golang.org/grpc"
@@ -57,7 +57,7 @@ func runReceiver() {
 
 	go grpcServer.Serve(lis)
 
-	client, err := client.NewChatEdgeClient(EDGE_TARGET)
+	client, err := edge.NewChatEdgeClient(EDGE_TARGET)
 	if err != nil {
 		logger.Error.Fatalln(err)
 	}
