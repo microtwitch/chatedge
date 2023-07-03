@@ -10,8 +10,9 @@ import (
 )
 
 type Receiver struct {
-	channels []string
-	client   *receiver.ReceiverClient
+	channels   []string
+	client     *receiver.ReceiverClient
+	errorCount int
 }
 
 type Reader struct {
@@ -65,19 +66,27 @@ func (r *Reader) Join(channel string, callback string) error {
 func (r *Reader) onPrivateMessage(msg twitch.PrivateMessage) {
 	receiverFound := r.distributeMessage(context.Background(), msg)
 	if !receiverFound {
-		log.Println("No receiver found for channel #" + msg.Channel)
+		log.Println("No receiver found. Attempting to part #" + msg.Channel)
+		r.client.Depart(msg.Channel)
 	}
 }
 
 func (r *Reader) distributeMessage(ctx context.Context, msg twitch.PrivateMessage) bool {
 	receiverFound := false
-	for _, receiver := range r.receivers {
+	for key, receiver := range r.receivers {
 		if util.Contains(receiver.channels, msg.Channel) {
 			receiverFound = true
 			err := receiver.client.Send(ctx, msg)
 			if err != nil {
-				// TODO: handle too many errors, kick out receiver
-				log.Println(err)
+				receiver.errorCount += 1
+				log.Println("Receiver returned error", key)
+			} else {
+				receiver.errorCount -= 1
+			}
+
+			if receiver.errorCount > 5 {
+				log.Println("Removing receiver because of too many errors", key)
+				delete(r.receivers, key)
 			}
 		}
 	}
