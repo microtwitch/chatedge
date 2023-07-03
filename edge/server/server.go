@@ -2,10 +2,10 @@ package server
 
 import (
 	"context"
+	"log"
 
 	"github.com/microtwitch/chatedge/edge/reader"
 	"github.com/microtwitch/chatedge/protos"
-	"github.com/microtwitch/chatedge/shared/logger"
 )
 
 type chatEdgeServer struct {
@@ -31,6 +31,6 @@ func (s *chatEdgeServer) JoinChat(ctx context.Context, joinRequest *protos.JoinR
 func (s *chatEdgeServer) Read() {
 	err := s.reader.Read()
 	if err != nil {
-		logger.Error.Fatalln(err)
+		log.Fatalln(err)
 	}
 }

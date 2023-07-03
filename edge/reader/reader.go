@@ -2,10 +2,10 @@ package reader
 
 import (
 	"context"
+	"log"
 
 	"github.com/gempir/go-twitch-irc/v4"
 	"github.com/microtwitch/chatedge/edge/receiver"
-	"github.com/microtwitch/chatedge/shared/logger"
 	"github.com/microtwitch/chatedge/shared/util"
 )
 
@@ -42,7 +42,7 @@ func (r *Reader) Read() error {
 func (r *Reader) Join(channel string, callback string) error {
 	recv, exists := r.receivers[callback]
 	if !exists {
-		logger.Info.Println("Registering new receiver for callback" + callback)
+		log.Println("Registering new receiver for callback" + callback)
 		client, err := receiver.NewReceiverClient(callback)
 		if err != nil {
 			return err
@@ -56,7 +56,7 @@ func (r *Reader) Join(channel string, callback string) error {
 		recv.channels = append(recv.channels, channel)
 	}
 
-	logger.Info.Println("Joining #" + channel)
+	log.Println("Joining #" + channel)
 	r.client.Join(channel)
 
 	return nil
@@ -65,7 +65,7 @@ func (r *Reader) Join(channel string, callback string) error {
 func (r *Reader) onPrivateMessage(msg twitch.PrivateMessage) {
 	receiverFound := r.distributeMessage(context.Background(), msg)
 	if !receiverFound {
-		logger.Warn.Println("No receiver found for channel #" + msg.Channel)
+		log.Println("No receiver found for channel #" + msg.Channel)
 	}
 }
 
@@ -77,7 +77,7 @@ func (r *Reader) distributeMessage(ctx context.Context, msg twitch.PrivateMessag
 			err := receiver.client.Send(ctx, msg)
 			if err != nil {
 				// TODO: handle too many errors, kick out receiver
-				logger.Warn.Println(err)
+				log.Println(err)
 			}
 		}
 	}

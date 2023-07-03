@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"log"
 	"net"
 
 	"github.com/microtwitch/chatedge/edge/config"
@@ -9,7 +10,6 @@ import (
 	"github.com/microtwitch/chatedge/protos"
 	"github.com/microtwitch/chatedge/receiver/edge"
 	receiver_server "github.com/microtwitch/chatedge/receiver/server"
-	"github.com/microtwitch/chatedge/shared/logger"
 	"google.golang.org/grpc"
 )
 
@@ -17,14 +17,13 @@ const EDGE_TARGET string = "127.0.0.1:8080"
 const RECEIVER_TARGET string = "127.0.0.1:9090"
 
 func main() {
-	logger.Init()
 	config.Init()
 
-	logger.Info.Println("Starting server on port 8080")
+	log.Println("Starting server on port 8080")
 
 	lis, err := net.Listen("tcp", EDGE_TARGET)
 	if err != nil {
-		logger.Error.Fatalln(err)
+		log.Fatalln(err)
 	}
 
 	var opts []grpc.ServerOption
@@ -42,11 +41,11 @@ func main() {
 }
 
 func runReceiver() {
-	logger.Info.Println("Starting receiver server on port 9090")
+	log.Println("Starting receiver server on port 9090")
 
 	lis, err := net.Listen("tcp", RECEIVER_TARGET)
 	if err != nil {
-		logger.Error.Fatalln(err)
+		log.Fatalln(err)
 	}
 
 	var opts []grpc.ServerOption
@@ -59,12 +58,12 @@ func runReceiver() {
 
 	client, err := edge.NewChatEdgeClient(EDGE_TARGET)
 	if err != nil {
-		logger.Error.Fatalln(err)
+		log.Fatalln(err)
 	}
 
 	err = client.JoinChat(context.Background(), "tmiloadtesting2", RECEIVER_TARGET)
 	if err != nil {
-		logger.Error.Fatalln(err)
+		log.Fatalln(err)
 	}
 
 	for {
