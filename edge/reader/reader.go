@@ -6,7 +6,7 @@ import (
 
 	"github.com/gempir/go-twitch-irc/v4"
 	"github.com/microtwitch/chatedge/edge/receiver"
-	"github.com/microtwitch/chatedge/shared/util"
+	"github.com/microtwitch/chatedge/util"
 )
 
 type Receiver struct {
