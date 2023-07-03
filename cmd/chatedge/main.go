@@ -13,7 +13,7 @@ import (
 func main() {
 	config.Init()
 
-	log.Println("Starting server...")
+	log.Println("Starting server on", config.Address)
 
 	lis, err := net.Listen("tcp", config.Address)
 	if err != nil {
