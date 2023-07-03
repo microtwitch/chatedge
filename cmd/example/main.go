@@ -62,7 +62,12 @@ func runReceiver() {
 		log.Fatalln(err)
 	}
 
-	err = client.Send(context.Background(), config.Token, config.BotName, "matthewde", "test")
+	err = client.Send(context.Background(), config.Token, config.BotName, "matthewde", "test1")
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	err = client.Send(context.Background(), config.Token, config.BotName, "matthewde", "test2")
 	if err != nil {
 		log.Fatalln(err)
 	}
