@@ -11,6 +11,7 @@ import (
 )
 
 func main() {
+	log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile)
 	config.Init()
 
 	log.Println("Starting server on", config.Address)
