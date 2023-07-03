@@ -12,9 +12,6 @@ run: protoc
 run-example: protoc
     go run cmd/example/main.go
 
-run-all: protoc
-    go run cmd/all/main.go
-
 debug:
     dlv debug cmd/all/main.go
 

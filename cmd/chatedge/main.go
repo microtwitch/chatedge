@@ -15,7 +15,7 @@ func main() {
 
 	log.Println("Starting server...")
 
-	lis, err := net.Listen("tcp", "127.0.0.1:"+config.Port)
+	lis, err := net.Listen("tcp", config.Address)
 	if err != nil {
 		log.Fatalln(err)
 	}
