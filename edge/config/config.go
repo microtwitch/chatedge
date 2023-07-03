@@ -1,16 +1,17 @@
 package config
 
 import (
+	"log"
 	"os"
 )
 
-var Port string
+var Address string
 
 func Init() {
-	port, present := os.LookupEnv("PORT")
+	address, present := os.LookupEnv("ADDRESS")
 	if !present {
-		Port = "8080"
+		log.Fatalln("No address found")
 	} else {
-		Port = port
+		Address = address
 	}
 }

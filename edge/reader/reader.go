@@ -42,7 +42,7 @@ func (r *Reader) Read() error {
 func (r *Reader) Join(channel string, callback string) error {
 	recv, exists := r.receivers[callback]
 	if !exists {
-		log.Println("Registering new receiver for callback" + callback)
+		log.Println("Registering new receiver for callback", callback)
 		client, err := receiver.NewReceiverClient(callback)
 		if err != nil {
 			return err

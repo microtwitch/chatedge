@@ -5,7 +5,6 @@ import (
 	"log"
 	"net"
 
-	"github.com/microtwitch/chatedge/edge/config"
 	"github.com/microtwitch/chatedge/edge/server"
 	"github.com/microtwitch/chatedge/protos"
 	"github.com/microtwitch/chatedge/receiver/edge"
@@ -17,8 +16,6 @@ const EDGE_TARGET string = "127.0.0.1:8080"
 const RECEIVER_TARGET string = "127.0.0.1:9090"
 
 func main() {
-	config.Init()
-
 	log.Println("Starting server on port 8080")
 
 	lis, err := net.Listen("tcp", EDGE_TARGET)
