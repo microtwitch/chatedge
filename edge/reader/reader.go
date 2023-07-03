@@ -80,6 +80,7 @@ func (r *Reader) distributeMessage(ctx context.Context, msg twitch.PrivateMessag
 			if err != nil {
 				receiver.errorCount += 1
 				log.Println("Receiver returned error", key)
+				log.Println(err)
 			} else {
 				receiver.errorCount -= 1
 			}
