@@ -24,6 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 type ChatEdgeClient interface {
 	JoinChat(ctx context.Context, in *JoinRequest, opts ...grpc.CallOption) (*JoinResponse, error)
 	GetChats(ctx context.Context, in *ChatRequest, opts ...grpc.CallOption) (*ChatResponse, error)
+	Send(ctx context.Context, in *SendRequest, opts ...grpc.CallOption) (*Empty, error)
 }
 
 type chatEdgeClient struct {
@@ -52,12 +53,22 @@ func (c *chatEdgeClient) GetChats(ctx context.Context, in *ChatRequest, opts ...
 	return out, nil
 }
 
+func (c *chatEdgeClient) Send(ctx context.Context, in *SendRequest, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/ChatEdge/Send", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ChatEdgeServer is the server API for ChatEdge service.
 // All implementations must embed UnimplementedChatEdgeServer
 // for forward compatibility
 type ChatEdgeServer interface {
 	JoinChat(context.Context, *JoinRequest) (*JoinResponse, error)
 	GetChats(context.Context, *ChatRequest) (*ChatResponse, error)
+	Send(context.Context, *SendRequest) (*Empty, error)
 	mustEmbedUnimplementedChatEdgeServer()
 }
 
@@ -70,6 +81,9 @@ func (UnimplementedChatEdgeServer) JoinChat(context.Context, *JoinRequest) (*Joi
 }
 func (UnimplementedChatEdgeServer) GetChats(context.Context, *ChatRequest) (*ChatResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetChats not implemented")
+}
+func (UnimplementedChatEdgeServer) Send(context.Context, *SendRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Send not implemented")
 }
 func (UnimplementedChatEdgeServer) mustEmbedUnimplementedChatEdgeServer() {}
 
@@ -120,6 +134,24 @@ func _ChatEdge_GetChats_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ChatEdge_Send_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SendRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatEdgeServer).Send(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ChatEdge/Send",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatEdgeServer).Send(ctx, req.(*SendRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ChatEdge_ServiceDesc is the grpc.ServiceDesc for ChatEdge service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -134,6 +166,10 @@ var ChatEdge_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetChats",
 			Handler:    _ChatEdge_GetChats_Handler,
+		},
+		{
+			MethodName: "Send",
+			Handler:    _ChatEdge_Send_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

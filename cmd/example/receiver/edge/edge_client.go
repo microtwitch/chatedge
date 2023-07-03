@@ -37,3 +37,9 @@ func (c *ChatEdgeClient) JoinChat(ctx context.Context, channel string, callback 
 
 	return nil
 }
+
+func (c *ChatEdgeClient) Send(ctx context.Context, token string, user string, channel string, msg string) error {
+	sendRequest := protos.SendRequest{Token: token, User: user, Channel: channel, Msg: msg}
+	_, err := c.client.Send(ctx, &sendRequest)
+	return err
+}

@@ -2,6 +2,7 @@ syntax = "proto3";
 
 option go_package = "github.com/microtwitch/chatedge/protos";
 
+import "protos/shared.proto";
 
 service EdgeReceiver {
     rpc Send(ChatMessage) returns (Empty) {}
@@ -13,4 +14,3 @@ message ChatMessage {
     string message = 3;
 }
 
-message Empty {}

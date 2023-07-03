@@ -2,10 +2,12 @@ syntax = "proto3";
 
 option go_package = "github.com/microtwitch/chatedge/protos";
 
+import "protos/shared.proto";
 
 service ChatEdge {
     rpc JoinChat(JoinRequest) returns (JoinResponse) {}
     rpc GetChats(ChatRequest) returns (ChatResponse) {}
+    rpc Send(SendRequest) returns (Empty) {}
 }
 
 message JoinRequest {
@@ -27,3 +29,11 @@ message ChatRequest {
 message ChatResponse {
     repeated string channels = 1;
 }
+
+message SendRequest {
+    string token = 1;    
+    string user = 2;
+    string channel = 3;
+    string msg = 4;
+}
+

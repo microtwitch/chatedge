@@ -5,6 +5,7 @@ import (
 	"log"
 	"net"
 
+	"github.com/microtwitch/chatedge/cmd/example/config"
 	"github.com/microtwitch/chatedge/cmd/example/receiver/edge"
 	receiver_server "github.com/microtwitch/chatedge/cmd/example/receiver/server"
 	"github.com/microtwitch/chatedge/edge/server"
@@ -16,6 +17,9 @@ const EDGE_TARGET string = "127.0.0.1:8080"
 const RECEIVER_TARGET string = "127.0.0.1:9090"
 
 func main() {
+	config.Init()
+	log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile)
+
 	log.Println("Starting server on port 8080")
 
 	lis, err := net.Listen("tcp", EDGE_TARGET)
@@ -58,10 +62,17 @@ func runReceiver() {
 		log.Fatalln(err)
 	}
 
-	err = client.JoinChat(context.Background(), "tmiloadtesting2", RECEIVER_TARGET)
+	err = client.Send(context.Background(), config.Token, config.BotName, "matthewde", "test")
 	if err != nil {
 		log.Fatalln(err)
 	}
+
+	/*
+		err = client.JoinChat(context.Background(), "tmiloadtesting2", RECEIVER_TARGET)
+		if err != nil {
+			log.Fatalln(err)
+		}
+	*/
 
 	for {
 		select {}
