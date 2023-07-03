@@ -5,10 +5,10 @@ import (
 	"log"
 	"net"
 
+	"github.com/microtwitch/chatedge/cmd/example/receiver/edge"
+	receiver_server "github.com/microtwitch/chatedge/cmd/example/receiver/server"
 	"github.com/microtwitch/chatedge/edge/server"
 	"github.com/microtwitch/chatedge/protos"
-	"github.com/microtwitch/chatedge/receiver/edge"
-	receiver_server "github.com/microtwitch/chatedge/receiver/server"
 	"google.golang.org/grpc"
 )
 
