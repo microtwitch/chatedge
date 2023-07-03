@@ -56,7 +56,7 @@ func (w *Writer) Say(sendRequest *protos.SendRequest) error {
 func (w *Writer) cleanUpLoop() {
 	for {
 		for token, timestamp := range w.lastMsg {
-			if time.Now().Sub(timestamp).Hours() > 24 {
+			if time.Since(timestamp).Hours() > 24 {
 				log.Println("Cleaning up client because of inactivity")
 				delete(w.clients, token)
 				delete(w.lastMsg, token)

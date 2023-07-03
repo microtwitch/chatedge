@@ -2,7 +2,6 @@ package server
 
 import (
 	"context"
-	"fmt"
 	"log"
 
 	"github.com/microtwitch/chatedge/protos"
@@ -18,6 +17,6 @@ func NewServer() *receiverServer {
 }
 
 func (s *receiverServer) Send(ctx context.Context, chatMessage *protos.ChatMessage) (*protos.Empty, error) {
-	log.Println(fmt.Sprintf("#%s %s: %s", chatMessage.Channel, chatMessage.User, chatMessage.Message))
+	log.Printf("#%s %s: %s", chatMessage.Channel, chatMessage.User, chatMessage.Message)
 	return &protos.Empty{}, nil
 }

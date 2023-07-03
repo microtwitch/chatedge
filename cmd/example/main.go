@@ -36,7 +36,12 @@ func main() {
 
 	protos.RegisterChatEdgeServer(grpcServer, server)
 
-	go grpcServer.Serve(lis)
+	go func() {
+		grpcServer.Serve(lis)
+		if err != nil {
+			log.Fatalln(err)
+		}
+	}()
 
 	runReceiver()
 }
@@ -55,7 +60,12 @@ func runReceiver() {
 
 	protos.RegisterEdgeReceiverServer(grpcServer, server)
 
-	go grpcServer.Serve(lis)
+	go func() {
+		err := grpcServer.Serve(lis)
+		if err != nil {
+			log.Fatalln(err)
+		}
+	}()
 
 	client, err := edge.NewChatEdgeClient(EDGE_TARGET)
 	if err != nil {
@@ -72,12 +82,10 @@ func runReceiver() {
 		log.Fatalln(err)
 	}
 
-	/*
-		err = client.JoinChat(context.Background(), "tmiloadtesting2", RECEIVER_TARGET)
-		if err != nil {
-			log.Fatalln(err)
-		}
-	*/
+	err = client.JoinChat(context.Background(), "tmiloadtesting2", RECEIVER_TARGET)
+	if err != nil {
+		log.Fatalln(err)
+	}
 
 	for {
 		select {}

@@ -22,3 +22,6 @@ docker-release version:
     git checkout {{version}}
     docker build --tag ghcr.io/microtwitch/chatedge:{{version}} .
     docker push ghcr.io/microtwitch/chatedge:{{version}}
+
+lint:
+    golangci-lint run
