@@ -37,7 +37,7 @@ func main() {
 	protos.RegisterChatEdgeServer(grpcServer, server)
 
 	go func() {
-		grpcServer.Serve(lis)
+		err = grpcServer.Serve(lis)
 		if err != nil {
 			log.Fatalln(err)
 		}
