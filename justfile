@@ -12,6 +12,12 @@ run: protoc
 run-example: protoc
     go run cmd/example/main.go
 
+clean:
+    rm main
+
+build: protoc
+    CGO_ENABLED=0 GOOS=linux go build cmd/chatedge/main.go
+
 debug:
     dlv debug cmd/all/main.go
 
